@@ -11,21 +11,9 @@
             },
             "lambda": {
                 "payload": {},
-                "environmentVariables": {}
-            }
-        },
-        {
-            "type": "aws-sam",
-            "request": "direct-invoke",
-            "name": "LambdaExample:HelloWorldFunction (dotnetcore3.1)",
-            "invokeTarget": {
-                "target": "template",
-                "templatePath": "LambdaExample/template.yaml",
-                "logicalId": "HelloWorldFunction"
-            },
-            "lambda": {
-                "payload": {},
-                "environmentVariables": {}
+                "environmentVariables": {          
+                    "AWS_ACCESS_KEY_ID": "XXX", 
+                    "AWS_SECRET_ACCESS_KEY": "XXXXXXXX"}
             }
         },
         {
@@ -39,7 +27,9 @@
             },
             "lambda": {
                 "payload": {},
-                "environmentVariables": {}
+                "environmentVariables": {                    
+                    "AWS_ACCESS_KEY_ID": "XXX", 
+                    "AWS_SECRET_ACCESS_KEY": "XXXXXXXX"}
             }
         }
     ]
