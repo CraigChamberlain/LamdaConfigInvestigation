@@ -7,7 +7,8 @@ using Amazon.DynamoDBv2;
 using Amazon.Lambda.Core;
 using Amazon.Lambda.APIGatewayEvents;
 using System;
-using System.Reflection;
+using System.IO;
+using Microsoft.Extensions.Configuration;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
@@ -17,17 +18,16 @@ namespace HelloWorld
 
     public class Function
     {   
-        private readonly IServiceProvider _serviceProvider;
+       private readonly IServiceProvider _serviceProvider;
 
-        private readonly IAmazonDynamoDB _client;
         
         public Function(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            _client = _serviceProvider.GetRequiredService<IAmazonDynamoDB>();
+            
 
         }
-        public Function() : this((new ServiceCollection()).AddAWSService<IAmazonDynamoDB>().BuildServiceProvider())
+        public Function() : this(StartUp.Container.BuildServiceProvider())
         {
         }
         private static readonly HttpClient client = new HttpClient();
@@ -60,6 +60,23 @@ namespace HelloWorld
                 StatusCode = 200,
                 Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
             };
+        }
+    }
+     public class StartUp
+    {
+        public static IServiceCollection Container => ConfigureServices();
+        public static IConfigurationRoot Configuration  => new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .Build();
+
+        private static IServiceCollection ConfigureServices()
+        {   
+            var services = new ServiceCollection();
+            services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
+            services.AddAWSService<IAmazonDynamoDB>();
+                    
+            return services;
         }
     }
 

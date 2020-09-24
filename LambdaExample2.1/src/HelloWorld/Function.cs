@@ -7,6 +7,8 @@ using Amazon.Lambda.APIGatewayEvents;
 using Microsoft.Extensions.DependencyInjection;
 using Amazon.DynamoDBv2;
 using System;
+using System.IO;
+using Microsoft.Extensions.Configuration;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
@@ -18,17 +20,14 @@ namespace HelloWorld
     {   
         private readonly IServiceProvider _serviceProvider;
 
-        private readonly IAmazonDynamoDB _client;
         
         public Function(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            _client = _serviceProvider.GetRequiredService<IAmazonDynamoDB>();
+            
 
         }
-        public Function() : this(
-                (new ServiceCollection()).AddAWSService<IAmazonDynamoDB>().BuildServiceProvider()
-            )
+        public Function() : this(StartUp.Container.BuildServiceProvider())
         {
         }
 
@@ -46,7 +45,7 @@ namespace HelloWorld
 
         public async Task<APIGatewayProxyResponse> FunctionHandler(APIGatewayProxyRequest apigProxyEvent, ILambdaContext context)
         {
-
+            var DBClient = _serviceProvider.GetRequiredService<IAmazonDynamoDB>();
             var location = await GetCallingIP();
             var body = new Dictionary<string, string>
             {
@@ -62,4 +61,23 @@ namespace HelloWorld
             };
         }
     }
+
+    public class StartUp
+    {
+        public static IServiceCollection Container => ConfigureServices();
+        public static IConfigurationRoot Configuration  => new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .Build();
+
+        private static IServiceCollection ConfigureServices()
+        {   
+            var services = new ServiceCollection();
+            services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
+            services.AddAWSService<IAmazonDynamoDB>();
+                    
+            return services;
+        }
+    }
 }
+
