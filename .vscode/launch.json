@@ -1,0 +1,46 @@
+{
+    "configurations": [
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "LambdaExample3.1:HelloWorldFunction (dotnetcore3.1)",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "LambdaExample3.1/template.yaml",
+                "logicalId": "HelloWorldFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "LambdaExample:HelloWorldFunction (dotnetcore3.1)",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "LambdaExample/template.yaml",
+                "logicalId": "HelloWorldFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
+        },
+        {
+            "type": "aws-sam",
+            "request": "direct-invoke",
+            "name": "LambdaExample2.1:HelloWorldFunction (dotnetcore2.1)",
+            "invokeTarget": {
+                "target": "template",
+                "templatePath": "LambdaExample2.1/template.yaml",
+                "logicalId": "HelloWorldFunction"
+            },
+            "lambda": {
+                "payload": {},
+                "environmentVariables": {}
+            }
+        }
+    ]
+}
