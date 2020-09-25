@@ -11,6 +11,7 @@ namespace LambdaExample
     {
         static void Main(string[] args)
         {   var _serviceProvider = StartUp.Container.BuildServiceProvider();
+            var exampleEnv = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID");
             var DBClient = _serviceProvider.GetRequiredService<IAmazonDynamoDB>();
             Console.WriteLine("Hello World!");
         }

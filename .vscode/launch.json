@@ -43,7 +43,10 @@
             "cwd": "${workspaceFolder}/ConsoleExample/",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
-            "stopAtEntry": false
-        },
+            "stopAtEntry": false,
+            "env": {
+                "AWS_ACCESS_KEY_ID": "XXX", 
+                "AWS_SECRET_ACCESS_KEY": "XXXXXXXX"}
+        }
     ]
 }
