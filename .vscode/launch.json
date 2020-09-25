@@ -31,6 +31,19 @@
                     "AWS_ACCESS_KEY_ID": "XXX", 
                     "AWS_SECRET_ACCESS_KEY": "XXXXXXXX"}
             }
-        }
+        },
+        {
+            "name": ".NET Core Launch (console)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildConsoleApp",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/ConsoleExample/bin/Debug/netcoreapp3.1/LambdaExample.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/ConsoleExample/",
+            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
     ]
 }
