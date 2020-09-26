@@ -31,7 +31,7 @@ namespace LambdaExample
             var services = new ServiceCollection();
             
             // This line is required but perhaps it shouldn't be?
-            services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
+            //services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
 
             services.AddAWSService<IAmazonDynamoDB>();
                     

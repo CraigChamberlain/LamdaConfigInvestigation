@@ -46,7 +46,15 @@
             "stopAtEntry": false,
             "env": {
                 "AWS_ACCESS_KEY_ID": "XXX", 
-                "AWS_SECRET_ACCESS_KEY": "XXXXXXXX"}
+                "AWS_SECRET_ACCESS_KEY": "XXXXXXXX"},
+            "justMyCode": false,
+            "enableStepFiltering": false,
+            "requireExactSource": false,
+            "symbolOptions": {
+                "searchPaths": [],
+                "searchMicrosoftSymbolServer": true,
+                "searchNuGetOrgSymbolServer": true
+            }
         }
     ]
 }
